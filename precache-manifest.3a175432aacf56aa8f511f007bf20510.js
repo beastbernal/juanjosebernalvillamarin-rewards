@@ -1,23 +1,23 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "e550075b696595c1156d0907db19babb",
+    "revision": "a39d58f2a0cb6d5adfeb4f02a9434c8d",
     "url": "/juanjosebernalvillamarin-rewards/index.html"
   },
   {
-    "revision": "59262300d6fbe5000f5b",
+    "revision": "8c6e7d1e1690522f6fec",
     "url": "/juanjosebernalvillamarin-rewards/static/css/main.0de45c0c.chunk.css"
   },
   {
-    "revision": "79ea7ab79287e1594b33",
-    "url": "/juanjosebernalvillamarin-rewards/static/js/2.55633fd8.chunk.js"
+    "revision": "7d9ec1b3818f5df79386",
+    "url": "/juanjosebernalvillamarin-rewards/static/js/2.0b46c363.chunk.js"
   },
   {
     "revision": "0749163b59fbee32225059cb60c18af6",
-    "url": "/juanjosebernalvillamarin-rewards/static/js/2.55633fd8.chunk.js.LICENSE.txt"
+    "url": "/juanjosebernalvillamarin-rewards/static/js/2.0b46c363.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "59262300d6fbe5000f5b",
-    "url": "/juanjosebernalvillamarin-rewards/static/js/main.0ccd8d13.chunk.js"
+    "revision": "8c6e7d1e1690522f6fec",
+    "url": "/juanjosebernalvillamarin-rewards/static/js/main.024b2777.chunk.js"
   },
   {
     "revision": "8ea4a882846ebe278bd9",

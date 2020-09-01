@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/juanjosebernalvillamarin-rewards/precache-manifest.83b22ec35ae9e6f4f361fa9d981a663b.js"
+  "/juanjosebernalvillamarin-rewards/precache-manifest.3a175432aacf56aa8f511f007bf20510.js"
 );
 
 self.addEventListener('message', (event) => {
