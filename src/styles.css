@@ -91,3 +91,26 @@
 .check {
   margin-left: 10px;
 }
+
+.box-center {
+  text-align: center;
+  border: 1px solid green;
+  width: 80%;
+  margin: auto;
+  height: 5em;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.box-user {
+  background-color: rgba(0, 0, 0, 0.3);
+  border-radius: 25px;
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  height: 3em;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}

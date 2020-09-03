@@ -1,20 +1,21 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/ContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
-// import { MenuIcon, MoreIcon, SearchIcon } from "@material-ui/icons/Menu";
-import Logo from "../assets/logo.png";
+
 import {
+  AppBar,
+  Button,
   Card,
   CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
-  Button,
-  Typography,
-  Toolbar,
-  AppBar,
   Grid,
+  Toolbar,
+  Typography,
 } from "@material-ui/core";
+import Pagination from '@material-ui/lab/Pagination';
+import usePagination from "./usePagination";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,6 +25,12 @@ const useStyles = makeStyles((theme) => ({
     position: "fixed",
     width: "100%",
     zIndex: 1000,
+  },
+  rootAlert: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -52,39 +59,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const DinosaurStore = () => {
-  // function FormRow() {
-  //   return (
-  //     <React.Fragment>
-  //       <Grid item xs={4}>
-  //         <Paper className={classes.paper}>item</Paper>
-  //       </Grid>
-  //       <Grid item xs={4}>
-  //         <Paper className={classes.paper}>item</Paper>
-  //       </Grid>
-  //       <Grid item xs={4}>
-  //         <Paper className={classes.paper}>item</Paper>
-  //       </Grid>
-  //     </React.Fragment>
-  //   );
-  // }
   const classes = useStyles();
   return (
-    <>
-      <div className={classes.rootbar}>
-        <AppBar position="static">
-          <Toolbar className={classes.toolbar}>
-            <img src={Logo} alt="logo" />
-            <Typography className={classes.title} variant="h5" noWrap>
-              Dinosaur Store
-            </Typography>
-            <Typography
-              className={classes.title}
-              variant="h5"
-              noWrap
-            ><UserInfo/> hola</Typography>
-          </Toolbar>
-        </AppBar>
-      </div>
+    <>      
       <div className={classes.container}>
         <Grid container spacing={1}>
           <Grid container item xs={12} spacing={4}>
@@ -96,24 +73,24 @@ const DinosaurStore = () => {
   );
 };
 
-function UserInfo({}) {
-  const { providerValue: {userData = []} } = useContext(AppContext);
-  return (
-      <div> {userData.name}</div>
-  )
-
-}
-
 function ProductList({ title }) {
   const { providerValue: {products = []} } = useContext(AppContext);
   const classes = useStyles();
+  const pages = usePagination(products, 16);
+  const [page, setPage] = React.useState(1);
+
+  const handleChange = (event, value) => {
+    setPage(value);
+    pages.jump(value);
+  };
+
   return (
     <>
-      {products && products.map((product) => {
+      {pages.currentData() && pages.currentData().map((product) => {
         return (
           <React.Fragment key={product._id}>
             <Grid item xs={3}>
-              <Card className={classes.root}>
+              <Card className={classes.root} variant="outlined">
                 <CardActionArea>
                   <CardMedia
                     key={product._id}
@@ -122,9 +99,6 @@ function ProductList({ title }) {
                     title={product.name}
                   />
                   <CardContent>
-                    <Typography gutterBottom variant="h5" component="h2">
-                      {product.name}
-                    </Typography>
                     <Typography
                       variant="body2"
                       color="textSecondary"
@@ -132,21 +106,27 @@ function ProductList({ title }) {
                     >
                       {product.category}
                     </Typography>
+                    <Typography gutterBottom variant="h5" component="h2">
+                      {product.name}
+                    </Typography>
                   </CardContent>
                 </CardActionArea>
-                <CardActions>
+                {/* <CardActions>
                   <Button size="small" color="primary">
                     Share
                   </Button>
                   <Button size="small" color="primary">
                     Learn More
                   </Button>
-                </CardActions>
+                </CardActions> */}
               </Card>
             </Grid>
           </React.Fragment>
         );
       })}
+      <div class="box-center">
+        <Pagination count={2} page={pages.currentPage} onChange={handleChange} />
+      </div>
     </>
   );
 }
