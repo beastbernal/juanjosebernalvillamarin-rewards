@@ -32,6 +32,11 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  rootButton: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
   menuButton: {
     marginRight: theme.spacing(2),
   },
@@ -74,7 +79,7 @@ const DinosaurStore = () => {
 };
 
 function ProductList({ title }) {
-  const { providerValue: {products = []} } = useContext(AppContext);
+  const { providerValue: {products = []}, providerValue: {userData = {}} } = useContext(AppContext);
   const classes = useStyles();
   const pages = usePagination(products, 16);
   const [page, setPage] = React.useState(1);
@@ -111,20 +116,36 @@ function ProductList({ title }) {
                     </Typography>
                   </CardContent>
                 </CardActionArea>
-                {/* <CardActions>
-                  <Button size="small" color="primary">
+                <CardActions>
+                {userData.points > product.cost &&
+                  <Button variant="contained" color="primary">
+                  Canjear
+                </Button>
+                }
+                {userData.points < product.cost &&
+                  <h2>
+                    No Canjear
+                  </h2>
+                }
+                {/* {if (userData.points > product.cost) {
+                  <div>userData.points {userData.points}</div>
+                } else {
+                  <div>product.cost {product.cost}</div>
+                }} */}
+                
+                  {/* <Button size="small" color="primary">
                     Share
                   </Button>
                   <Button size="small" color="primary">
                     Learn More
-                  </Button>
-                </CardActions> */}
+                  </Button> */}
+                </CardActions>
               </Card>
             </Grid>
           </React.Fragment>
         );
       })}
-      <div class="box-center">
+      <div className="box-center">
         <Pagination count={2} page={pages.currentPage} onChange={handleChange} />
       </div>
     </>

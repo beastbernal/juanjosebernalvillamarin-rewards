@@ -22,105 +22,30 @@ const dinoStore = {
 };
 
 export default function AppProvider({ children }) {
-  // const userData = React.useCallback(() => {
-  //   axios({
-  //     method: "GET",
-  //     url: "https://coding-challenge-api.aerolab.co/user/me",
-  //     headers: headers,
-  //   })
-  //     .then((response) => {
-  //       // console.log("user", response.data);
-  //       dinoStore.userData = response.data;
-  //       setStoreData(dinoStore);
-  //       console.log('storeData-1', dinoStore);
-  //       productsData();
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // });
-  // const productsData = React.useCallback(() => {
-  //   axios({
-  //     method: "GET",
-  //     url: "https://coding-challenge-api.aerolab.co/products",
-  //     headers: headers,
-  //   })
-  //     .then((response) => {
-  //       // console.log('dinoStore-2', dinoStore);
-  //       //dinoStore.products = response.data
-  //       setProducts(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // });
-  useEffect(() => {
-    async function productsData() {
-      fetch("https://coding-challenge-api.aerolab.co/products", {
-        method: "GET",
-        headers: myHeaders,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log("products", data);
-          // console.log("storeData - products", storeData);
-          // setStoreData({ ...storeData, products: data });
-          setProducts(data);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-
-    async function userData() {
-      fetch("https://coding-challenge-api.aerolab.co/user/me", {
-        method: "GET",
-        headers: myHeaders,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log("user", data);
-
-          // console.log("storeData - user", storeData);
-
-          // setStoreData({ ...storeData, userData: data });
-          // console.log("storeData-userData", storeData);
-          setUserData(data);
-          productsData();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-    userData();
-  }, []);
+  const metodo = async (url) => {
+    const res = await fetch(url, {
+      method: "GET",
+      headers: myHeaders,
+    });
+    const data = await res.json();
+    return data;
+  };
 
   useEffect(() => {
-    // async function productsData() {
-    //   fetch("https://coding-challenge-api.aerolab.co/products", {
-    //     method: 'GET',
-    //     headers: myHeaders
-    //   })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //       console.log("data", data);
-    //       setStoreData({...storeData, products: data});
-    //       console.log("storeData-prod", storeData);
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }
-    // productsData();
+    (async () => {
+      setProducts(
+        await metodo("https://coding-challenge-api.aerolab.co/products")
+      );
+      setUserData(
+        await metodo("https://coding-challenge-api.aerolab.co/user/me")
+      );
+    })();
   }, []);
-  // const [libros, setLibros] = useState(listaLibros);
-  // const [products, setProducts] = useState(products);
-  // const [storeData, setStoreData] = useState({
-  //   userData: '',
-  //   products: ''
-  // });
+
+  useEffect(() => {}, []);
   const [products, setProducts] = useState("");
   const [userData, setUserData] = useState("");
+  // const [userData, setUserData] = useState("");
 
   const providerValue = useMemo(
     () => ({
@@ -133,7 +58,7 @@ export default function AppProvider({ children }) {
   );
 
   return (
-    <AppContext.Provider value={{providerValue}}>
+    <AppContext.Provider value={{ providerValue }}>
       {children}
     </AppContext.Provider>
   );

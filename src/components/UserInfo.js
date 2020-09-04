@@ -23,7 +23,7 @@ function UserInfo({}) {
     const classes = useStyles();
     const { providerValue: {userData = []} } = useContext(AppContext);
     return (
-        <div class="box-user">
+        <div className="box-user">
           <strong> {userData.name}</strong> ::  {userData.points}💰
         </div>
     )
