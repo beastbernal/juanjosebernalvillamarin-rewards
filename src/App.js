@@ -9,14 +9,9 @@ import Logo from "./assets/logo.png";
 import DinosaurStore from "./components/DinosaurStore";
 import UserInfo from "./components/UserInfo";
 import ManageUser from "./components/ManageUser";
+import History from "./components/History";
 import {
   AppBar,
-  Drawer,
-  CssBaseline,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
   Toolbar,
   Typography,
 } from "@material-ui/core";
@@ -94,10 +89,13 @@ export default function App() {
                     <nav>
                       <ul>
                         <li>
-                          <Link to="/">Home</Link>
+                          <Link to="/">Productos</Link>
                         </li>
                         <li>
-                          <Link to="/books">Child 1</Link>
+                          <Link to="/person">Persona</Link>
+                        </li>
+                        <li>
+                          <Link to="/history">History</Link>
                         </li>
                       </ul>
                     </nav>
@@ -115,7 +113,8 @@ export default function App() {
             {/* también la envolvemos en el componente Switch */}
             <Route path="/" component={DinosaurStore} exact />{" "}
             {/* y creamos nuestras rutas */}
-            <Route path="/books" component={ManageUser} exact />
+            <Route path="/person" component={ManageUser} exact />
+            <Route path="/history" component={History} exact />
             {/* <Route path="/books/:bookId" component={BookDetail} exact /> */}
           </Switch>
         </HashRouter>

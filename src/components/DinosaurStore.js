@@ -117,7 +117,7 @@ function ProductList({ title }) {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                  {userData.points > product.cost * 100 ? (
+                  {userData.points > product.cost ? (
                     <Button variant="contained" color="primary">
                       Canjear 👜
                     </Button>

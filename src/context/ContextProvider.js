@@ -14,7 +14,6 @@ const headers = {
 let myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("X-Custom-Header", "ProcessThisImmediately");
-// myHeaders.append("Access-Control-Allow-Origin", "https://localhost:3000");
 myHeaders.append("Authorization", "Bearer " + jjToken);
 
 const dinoStore = {
@@ -31,8 +30,6 @@ export default function AppProvider({ children }) {
       method: method,
       body: JSON.stringify(body), 
       headers: myHeaders,
-      mode: 'cors',
-      cache: 'default'
     });
     const data = await res.json();
     return data;
@@ -69,7 +66,7 @@ export default function AppProvider({ children }) {
     
     (async () => {
       setUserData(
-        await metodo("https://coding-challenge-api.aerolab.co/user/points", "POST", '{amount:' + points+'}')
+        await metodo("https://coding-challenge-api.aerolab.co/user/points", "POST", {'amount': points})
       );
       refrehUser();
     })();
