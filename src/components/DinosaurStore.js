@@ -117,28 +117,15 @@ function ProductList({ title }) {
                   </CardContent>
                 </CardActionArea>
                 <CardActions>
-                {userData.points > product.cost &&
-                  <Button variant="contained" color="primary">
-                  Canjear
-                </Button>
-                }
-                {userData.points < product.cost &&
-                  <h2>
-                    No Canjear
-                  </h2>
-                }
-                {/* {if (userData.points > product.cost) {
-                  <div>userData.points {userData.points}</div>
-                } else {
-                  <div>product.cost {product.cost}</div>
-                }} */}
-                
-                  {/* <Button size="small" color="primary">
-                    Share
-                  </Button>
-                  <Button size="small" color="primary">
-                    Learn More
-                  </Button> */}
+                  {userData.points > product.cost * 100 ? (
+                    <Button variant="contained" color="primary">
+                      Canjear 👜
+                    </Button>
+                  ) : (
+                    <Button variant="outlined" disabled>
+                      Te faltan {userData.points - product.cost} 💰
+                    </Button>
+                  )}
                 </CardActions>
               </Card>
             </Grid>

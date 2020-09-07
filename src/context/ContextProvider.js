@@ -14,6 +14,7 @@ const headers = {
 let myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 myHeaders.append("X-Custom-Header", "ProcessThisImmediately");
+// myHeaders.append("Access-Control-Allow-Origin", "https://localhost:3000");
 myHeaders.append("Authorization", "Bearer " + jjToken);
 
 const dinoStore = {
@@ -22,10 +23,16 @@ const dinoStore = {
 };
 
 export default function AppProvider({ children }) {
-  const metodo = async (url) => {
+  const [products, setProducts] = useState("");
+  const [userData, setUserData] = useState("");
+
+  const metodo = async (url, method, body) => {
     const res = await fetch(url, {
-      method: "GET",
+      method: method,
+      body: JSON.stringify(body), 
       headers: myHeaders,
+      mode: 'cors',
+      cache: 'default'
     });
     const data = await res.json();
     return data;
@@ -34,18 +41,39 @@ export default function AppProvider({ children }) {
   useEffect(() => {
     (async () => {
       setProducts(
-        await metodo("https://coding-challenge-api.aerolab.co/products")
+        await metodo("https://coding-challenge-api.aerolab.co/products", "GET")
       );
       setUserData(
-        await metodo("https://coding-challenge-api.aerolab.co/user/me")
+        await metodo("https://coding-challenge-api.aerolab.co/user/me", "GET")
       );
     })();
   }, []);
 
   useEffect(() => {}, []);
-  const [products, setProducts] = useState("");
-  const [userData, setUserData] = useState("");
+  
   // const [userData, setUserData] = useState("");
+
+  const refrehUser = () => {
+    console.log("user");
+    (async () => {
+      setUserData(
+        await metodo("https://coding-challenge-api.aerolab.co/user/me", "GET")
+      );
+    })();
+  }
+
+  const addPoints = (points) => {
+    console.log('points', points)
+    let body = {};
+    body.amount = points;
+    
+    (async () => {
+      setUserData(
+        await metodo("https://coding-challenge-api.aerolab.co/user/points", "POST", '{amount:' + points+'}')
+      );
+      refrehUser();
+    })();
+  }
 
   const providerValue = useMemo(
     () => ({
@@ -53,6 +81,9 @@ export default function AppProvider({ children }) {
       setProducts,
       userData,
       setUserData,
+      refrehUser,
+      headers,
+      addPoints
     }),
     [products, userData]
   );
