@@ -74,6 +74,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function App() {
+  const setActive = (event) => {
+    Array.from(document.getElementsByClassName('active')).map(function(el) { 
+        el.classList.remove('active');
+        el.classList.remove('show');
+        return null;
+    });
+    document.getElementById(event.currentTarget.id).classList.add("active");
+  }
   const classes = useStyles();
   return (
     <AppProvider>
@@ -88,13 +96,13 @@ export default function App() {
                     <nav>
                       <ul>
                         <li>
-                          <Link to="/">Productos</Link>
+                          <Link id="lProduct" to="/" onClick={(event) => setActive(event)} className="active">Productos</Link>
                         </li>
                         <li>
-                          <Link to="/person">Persona</Link>
+                          <Link id="lPerson" to="/person" onClick={(event) => setActive(event)}>Persona</Link>
                         </li>
                         <li>
-                          <Link to="/history">History</Link>
+                          <Link id="lHistory" to="/history" onClick={(event) => setActive(event)}>Historial</Link>
                         </li>
                       </ul>
                     </nav>

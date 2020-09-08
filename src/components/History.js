@@ -23,7 +23,7 @@ const History = () => {
   } = useContext(AppContext);
   return (
     <div className={classes.container}>
-     <div>Historia</div>
+     <h2>Historial de Canjes</h2>
         <Grid container spacing={1}>
           <Grid container item xs={12} spacing={4}>
           <ProductList isRedeemable={false} products={recordData} userData={userData} />

@@ -114,3 +114,36 @@
   align-items: center;
   justify-content: center
 }
+
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  /* background-color: #52575D; */
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+li a:hover:not(.active) {
+  background-color: #d31c27;
+  border-radius: 10px;
+}
+
+.active {
+  background-color: rgb(211,108,28, 0.7);
+  border-radius: 10px;
+  color: yellow;
+  border-bottom-width: 5px solid #000;
+}

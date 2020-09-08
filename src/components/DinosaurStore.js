@@ -25,6 +25,7 @@ const DinosaurStore = () => {
   return (
     <>      
       <div className={classes.container}>
+      <h2>Productos Disponibles Para Canje</h2>
         <Grid container spacing={1}>
           <Grid container item xs={12} spacing={4}>
             <ProductList isRedeemable={true} products={products} userData={userData} />

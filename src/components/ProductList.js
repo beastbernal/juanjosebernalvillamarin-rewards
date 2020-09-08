@@ -102,7 +102,7 @@ function ProductList({ isRedeemable, products, userData }) {
                   </CardActionArea>
                   {isRedeemable && (
                   <CardActions>
-                    {userData.points > product.cost*1000 ? (
+                    {userData.points > product.cost ? (
                       <Button variant="contained" color="primary" aria-label="Canjear">
                         Canjear <span role="img" aria-labelledby="coin">👜</span>
                       </Button>
