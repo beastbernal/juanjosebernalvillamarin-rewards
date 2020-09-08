@@ -15,7 +15,6 @@ import {
   Toolbar,
   Typography,
 } from "@material-ui/core";
-import {InboxIcon, MailIcon} from '@material-ui/icons/MoveToInbox';
 
 const drawerWidth = 240;
 

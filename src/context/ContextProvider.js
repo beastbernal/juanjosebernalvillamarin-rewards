@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useMemo } from "react";
-import axios from "axios";
 
 export const AppContext = React.createContext();
 
@@ -16,16 +15,13 @@ myHeaders.append("Content-Type", "application/json");
 myHeaders.append("X-Custom-Header", "ProcessThisImmediately");
 myHeaders.append("Authorization", "Bearer " + jjToken);
 
-const dinoStore = {
-  userData: {},
-  products: [],
-};
 
 export default function AppProvider({ children }) {
   const [products, setProducts] = useState("");
   const [userData, setUserData] = useState("");
+  const [recordData, setRecordData] = useState("");
 
-  const metodo = async (url, method, body) => {
+  const connectToServer = async (url, method, body) => {
     const res = await fetch(url, {
       method: method,
       body: JSON.stringify(body), 
@@ -38,27 +34,31 @@ export default function AppProvider({ children }) {
   useEffect(() => {
     (async () => {
       setProducts(
-        await metodo("https://coding-challenge-api.aerolab.co/products", "GET")
+        await connectToServer("https://coding-challenge-api.aerolab.co/products", "GET")
       );
       setUserData(
-        await metodo("https://coding-challenge-api.aerolab.co/user/me", "GET")
+        await connectToServer("https://coding-challenge-api.aerolab.co/user/me", "GET")
+      );
+      setRecordData(
+        await connectToServer("https://coding-challenge-api.aerolab.co/user/history", "GET")
       );
     })();
   }, []);
-
-  useEffect(() => {}, []);
-  
-  // const [userData, setUserData] = useState("");
 
   const refrehUser = () => {
     console.log("user");
     (async () => {
       setUserData(
-        await metodo("https://coding-challenge-api.aerolab.co/user/me", "GET")
+        await connectToServer("https://coding-challenge-api.aerolab.co/user/me", "GET")
       );
     })();
   }
 
+/*************************************************** 
+  funcionalidad de agregar más puntos de canje al usuario. 
+  Considera que la API solo acepta los valores 1000, 5000 o 7500. 
+  Realiza las validaciones pertinentes para manejar casos de errores.
+*****************************************************/
   const addPoints = (points) => {
     console.log('points', points)
     let body = {};
@@ -66,7 +66,7 @@ export default function AppProvider({ children }) {
     
     (async () => {
       setUserData(
-        await metodo("https://coding-challenge-api.aerolab.co/user/points", "POST", {'amount': points})
+        await connectToServer("https://coding-challenge-api.aerolab.co/user/points", "POST", {'amount': points})
       );
       refrehUser();
     })();
@@ -75,14 +75,14 @@ export default function AppProvider({ children }) {
   const providerValue = useMemo(
     () => ({
       products,
-      setProducts,
       userData,
+      recordData,
       setUserData,
       refrehUser,
       headers,
       addPoints
     }),
-    [products, userData]
+    [products, userData, recordData]
   );
 
   return (

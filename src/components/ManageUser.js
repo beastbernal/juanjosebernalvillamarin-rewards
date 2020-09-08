@@ -66,10 +66,9 @@ function valuetext(value) {
 const ManageUser = () => {
   const [value, setValue] = React.useState(1000);
   const {
-    providerValue: { userData = {}, addPoints },
+    providerValue: { addPoints },
   } = useContext(AppContext);
 
-  const providerValue = useContext(AppContext);
   const classes = useStyles();
   const handleChange = (event, newValue) => {
     setValue(newValue);
