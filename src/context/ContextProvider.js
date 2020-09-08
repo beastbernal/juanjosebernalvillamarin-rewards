@@ -59,17 +59,17 @@ export default function AppProvider({ children }) {
   Considera que la API solo acepta los valores 1000, 5000 o 7500. 
   Realiza las validaciones pertinentes para manejar casos de errores.
 *****************************************************/
-  const addPoints = (points) => {
+  const addPoints = async (points) => {
     console.log('points', points)
     let body = {};
     body.amount = points;
     
-    (async () => {
-      setUserData(
-        await connectToServer("https://coding-challenge-api.aerolab.co/user/points", "POST", {'amount': points})
-      );
-      refrehUser();
-    })();
+    return await connectToServer("https://coding-challenge-api.aerolab.co/user/points", "POST", {'amount': points})
+    // (async () => {
+    //   setUserData(
+    //   );
+    //   refrehUser();
+    // })();
   }
 
   const providerValue = useMemo(

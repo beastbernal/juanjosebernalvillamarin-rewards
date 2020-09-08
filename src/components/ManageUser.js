@@ -1,8 +1,13 @@
 import React, { useContext } from "react";
 import { AppContext } from "../context/ContextProvider";
 import { makeStyles } from "@material-ui/core/styles";
-import { Slider, Paper, Button } from "@material-ui/core";
+import { Slider, Paper, Button, Snackbar, Slide } from "@material-ui/core";
 import { Alert, AlertTitle } from "@material-ui/lab";
+// import {IconButton, CloseIcon} from '@material-ui/icons/IconButton';
+
+function TransitionDown(props) {
+  return <Slide {...props} direction="down" />;
+}
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,6 +47,9 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(5),
     backgroundColor: "rgba(143, 178, 67, 0.7)",
   },
+  close: {
+    padding: theme.spacing(0.5),
+  },
 }));
 
 const marks = [
@@ -64,14 +72,29 @@ function valuetext(value) {
 }
 
 const ManageUser = () => {
+  const [open, setOpen] = React.useState(false);
+  const [resultMsj, setResultMsj] = React.useState("");
   const [value, setValue] = React.useState(1000);
   const {
-    providerValue: { addPoints },
+    providerValue: { addPoints, refrehUser },
   } = useContext(AppContext);
 
   const classes = useStyles();
   const handleChange = (event, newValue) => {
     setValue(newValue);
+  };
+
+  const managePoint = async () => {
+    const result = await addPoints(value);
+    console.log(result);
+    // setResultMsj(" - " + result.message +  result['New Points'] ? ', ' + result['New Points'] : '' )
+    setResultMsj(result.message +  ', Nuevo Puntaje: ' + result['New Points'] );
+    setOpen(true);
+    await refrehUser();
+  }
+
+  const handleClose = () => {
+    setOpen(false);
   };
   return (
     <>
@@ -99,10 +122,25 @@ const ManageUser = () => {
           <Button
             variant="contained"
             color="primary"
-            onClick={() => addPoints(value)}
+            onClick={() => managePoint()}
           >
             Agregar: <strong> {value} </strong> 💰
           </Button>
+
+          <Snackbar
+            open={open}
+            onClose={handleClose}
+            TransitionComponent={TransitionDown}
+            message={resultMsj}
+            action={
+              <React.Fragment>
+                <Button color="secondary" size="small" onClick={handleClose}>
+                  Cerrar
+                </Button>
+                
+              </React.Fragment>
+            }
+          />
         </div>
       </div>
     </>
