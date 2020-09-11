@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   container: {
-    paddingTop: theme.spacing(20),
+    paddingTop: theme.spacing(12),
   },
 }));
 

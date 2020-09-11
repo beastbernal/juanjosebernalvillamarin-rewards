@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   toolbar: {
-    minHeight: 128,
+    minHeight: 88,
     alignItems: "flex-start",
     paddingTop: theme.spacing(1),
     paddingBottom: theme.spacing(2),
@@ -90,7 +90,7 @@ export default function App() {
           <div className={classes.rootbar}>
             <AppBar position="static">
               <Toolbar className={classes.toolbar}>
-                <img src={Logo} alt="logo" />
+                <img src={Logo} alt="logo" className="logo-d"/>
                 <Typography className={classes.title} variant="h5" noWrap>
                   <header>
                     <nav>
@@ -116,13 +116,9 @@ export default function App() {
           </div>
 
           <Switch>
-            {" "}
-            {/* también la envolvemos en el componente Switch */}
             <Route path="/" component={DinosaurStore} exact />{" "}
-            {/* y creamos nuestras rutas */}
             <Route path="/person" component={ManageUser} exact />
             <Route path="/history" component={History} exact />
-            {/* <Route path="/books/:bookId" component={BookDetail} exact /> */}
           </Switch>
         </HashRouter>
       </div>

@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
     alignSelf: "flex-end",
   },
   container: {
-    paddingTop: theme.spacing(20),
+    paddingTop: theme.spacing(12),
   },
   paper: {
     marginTop: theme.spacing(10),
@@ -85,17 +85,15 @@ const ManageUser = () => {
   };
 
   const managePoint = async () => {
+    let result = {};
     try {
-      const result = await addPoints(value);
-      console.log(result);
-      // setResultMsj(" - " + result.message +  result['New Points'] ? ', ' + result['New Points'] : '' )
-      setResultMsj(result.message +  ', Nuevo Puntaje: ' + result['New Points'] );
-      setOpen(true);
-      await refrehUser();
-    
+      result = await addPoints(value);      
     } catch (e) {
       
     }
+    setResultMsj(result.message +  ', Nuevo Puntaje: ' + result['New Points'] );
+    setOpen(true);
+    await refrehUser();
   }
 
   const handleClose = () => {

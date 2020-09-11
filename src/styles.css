@@ -42,6 +42,10 @@
   background-color: palevioletred;
 }
 
+.logo-d {
+  height: 80px;
+}
+
 .no-leidos {
   height: 300px;
   width: 300px;
@@ -100,7 +104,17 @@
   height: 5em;
   display: flex;
   align-items: center;
-  justify-content: center
+  justify-content: center;
+}
+.box-center-2 {
+  text-align: center;
+  width: 80%;
+  margin: auto;
+  height: 5em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 20px;
 }
 
 .box-user {
