@@ -85,12 +85,17 @@ const ManageUser = () => {
   };
 
   const managePoint = async () => {
-    const result = await addPoints(value);
-    console.log(result);
-    // setResultMsj(" - " + result.message +  result['New Points'] ? ', ' + result['New Points'] : '' )
-    setResultMsj(result.message +  ', Nuevo Puntaje: ' + result['New Points'] );
-    setOpen(true);
-    await refrehUser();
+    try {
+      const result = await addPoints(value);
+      console.log(result);
+      // setResultMsj(" - " + result.message +  result['New Points'] ? ', ' + result['New Points'] : '' )
+      setResultMsj(result.message +  ', Nuevo Puntaje: ' + result['New Points'] );
+      setOpen(true);
+      await refrehUser();
+    
+    } catch (e) {
+      
+    }
   }
 
   const handleClose = () => {
@@ -99,7 +104,7 @@ const ManageUser = () => {
   return (
     <>
       <div className={classes.container}>
-        <h1>Agregar Más Puntos</h1>
+        <h2>Agregar Más Puntos</h2>
         <div className={classes.root}>
           <Alert severity="info" className={classes.rootAlert}>
             <AlertTitle>Recuerda: </AlertTitle>

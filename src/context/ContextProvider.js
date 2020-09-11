@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect, useMemo, useCallback } from "react";
 
 export const AppContext = React.createContext();
 
@@ -45,33 +45,44 @@ export default function AppProvider({ children }) {
     })();
   }, []);
 
-  const refrehUser = () => {
-    console.log("user");
+  const refrehUser = useCallback(async () => {
     (async () => {
       setUserData(
         await connectToServer("https://coding-challenge-api.aerolab.co/user/me", "GET")
       );
     })();
-  }
+  },[])
+
+  const updateHistory = useCallback(async () => {
+    (async () => {
+      setRecordData(
+        await connectToServer("https://coding-challenge-api.aerolab.co/user/history", "GET")
+      );
+    })();
+  },[])
 
 /*************************************************** 
-  funcionalidad de agregar más puntos de canje al usuario. 
-  Considera que la API solo acepta los valores 1000, 5000 o 7500. 
-  Realiza las validaciones pertinentes para manejar casos de errores.
+ * funcionalidad de agregar más puntos de canje al usuario. 
+ * Considera que la API solo acepta los valores 1000, 5000 o 7500. 
+ * Realiza las validaciones pertinentes para manejar casos de errores.
 *****************************************************/
-  const addPoints = async (points) => {
-    console.log('points', points)
-    let body = {};
-    body.amount = points;
-    
-    return await connectToServer("https://coding-challenge-api.aerolab.co/user/points", "POST", {'amount': points})
-    // (async () => {
-    //   setUserData(
-    //   );
-    //   refrehUser();
-    // })();
-  }
+  const addPoints = useCallback(async (points) => {
+    const result = await connectToServer("https://coding-challenge-api.aerolab.co/user/points", "POST", {'amount': points});
+    return result;
+  }, []);
 
+  /**
+   * Redime un producto enviando su productId
+   * Retorna un mensaje de verificación o error
+   */
+  const redeemProduct = useCallback(async (productId) => {
+    const result = await connectToServer("https://coding-challenge-api.aerolab.co/redeem", "POST", {'productId': productId});
+    return result;    
+  }, []);
+
+  /**
+   * Define el provider para enviarlo en el contexto, incluyendo las funciones y objetos globales de la app
+   */
   const providerValue = useMemo(
     () => ({
       products,
@@ -80,9 +91,11 @@ export default function AppProvider({ children }) {
       setUserData,
       refrehUser,
       headers,
-      addPoints
+      addPoints,
+      redeemProduct,
+      updateHistory
     }),
-    [products, userData, recordData]
+    [products, userData, recordData, refrehUser, addPoints, redeemProduct, updateHistory]
   );
 
   return (

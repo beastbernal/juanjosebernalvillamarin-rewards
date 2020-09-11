@@ -1,5 +1,8 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import { AppContext } from "../context/ContextProvider";
+import to from "await-to-js";
+import { v4 as uuidv4 } from "uuid";
 
 import {
   Button,
@@ -10,8 +13,14 @@ import {
   CardMedia,
   Grid,
   Typography,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Slide 
 } from "@material-ui/core";
-import Pagination from '@material-ui/lab/Pagination';
+import Pagination from "@material-ui/lab/Pagination";
 import usePagination from "./usePagination";
 
 const useStyles = makeStyles((theme) => ({
@@ -24,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     zIndex: 1000,
   },
   rootAlert: {
-    width: '100%',
-    '& > * + *': {
+    width: "100%",
+    "& > * + *": {
       marginTop: theme.spacing(2),
     },
   },
   rootButton: {
-    '& > *': {
+    "& > *": {
       margin: theme.spacing(1),
     },
   },
@@ -60,12 +69,46 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
+
 function ProductList({ isRedeemable, products, userData }) {
-  
+  const {
+    providerValue: { redeemProduct, updateHistory, refrehUser },
+  } = useContext(AppContext);
+
   const classes = useStyles();
   const pages = usePagination(products, 16);
-  const [page, setPage] = React.useState(1);
+  const [page, setPage] = useState(1);
   const pageNumber = products.length > 16 ? Math.ceil(products.length / 16) : 1;
+  const [open, setOpen] = useState(false);
+  const [redeemTitle, setRedeemTitle] = useState("");
+  const [redeemMsj, setRedeemMsj] = useState("");
+
+  async function asyncRedeemProduct(productId) {
+    const [err, result] = await to(redeemProduct(productId));
+    if (!result) {
+      setRedeemTitle("Error");
+      setRedeemMsj("Producto No Pudo ser Redimido, Por Favor Intenta de Nuevo");
+      handleClickOpen();
+      throw new Error("Error al Redimir el Producto" + err);
+    } else {
+      await updateHistory();
+      await refrehUser();
+      setRedeemTitle("Felicitaciones");
+      setRedeemMsj("Producto Redimido con Èxito 👜");
+      handleClickOpen();
+    }
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handleChange = (event, value) => {
     setPage(value);
@@ -74,15 +117,38 @@ function ProductList({ isRedeemable, products, userData }) {
 
   return (
     <>
-      {pages.currentData() && page &&
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+        TransitionComponent={Transition}
+        keepMounted
+      >
+        <DialogTitle id="alert-dialog-title">
+          {redeemTitle}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+          {redeemMsj}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>          
+          <Button onClick={handleClose} variant="contained" color="primary" autoFocus>
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {pages.currentData() &&
+        page &&
         pages.currentData().map((product) => {
           return (
-            <React.Fragment key={product._id}>
+            <React.Fragment key={uuidv4()}>
               <Grid item xs={3}>
                 <Card className={classes.root} variant="outlined">
                   <CardActionArea>
                     <CardMedia
-                      key={product._id}
+                      key={uuidv4()}
                       component="img"
                       image={product.img.url}
                       title={product.name}
@@ -101,18 +167,26 @@ function ProductList({ isRedeemable, products, userData }) {
                     </CardContent>
                   </CardActionArea>
                   {isRedeemable && (
-                  <CardActions>
-                    {userData.points > product.cost ? (
-                      <Button variant="contained" color="primary" aria-label="Canjear">
-                        Canjear <span role="img" aria-labelledby="coin">👜</span>
-                      </Button>
-                    ) : (
-                      <Button variant="outlined" disabled>
-                        Te faltan {userData.points - product.cost} 💰
-                      </Button>
-                    )}
-                  </CardActions>
-                  ) }
+                    <CardActions>
+                      {userData.points > product.cost ? (
+                        <Button
+                          variant="contained"
+                          color="primary"
+                          aria-label="Canjear"
+                          onClick={() => asyncRedeemProduct(product._id)}
+                        >
+                          Canjear{" "}
+                          <span role="img" aria-labelledby="coin">
+                            👜
+                          </span>
+                        </Button>
+                      ) : (
+                        <Button variant="outlined" disabled>
+                          Te faltan {userData.points - product.cost} 💰
+                        </Button>
+                      )}
+                    </CardActions>
+                  )}
                 </Card>
               </Grid>
             </React.Fragment>
@@ -128,6 +202,5 @@ function ProductList({ isRedeemable, products, userData }) {
     </>
   );
 }
-
 
 export default ProductList;
