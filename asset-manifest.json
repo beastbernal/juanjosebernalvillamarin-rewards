@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/juanjosebernalvillamarin-rewards/static/css/main.2867a27a.chunk.css",
-    "main.js": "/juanjosebernalvillamarin-rewards/static/js/main.c5ecabbd.chunk.js",
-    "main.js.map": "/juanjosebernalvillamarin-rewards/static/js/main.c5ecabbd.chunk.js.map",
+    "main.css": "/juanjosebernalvillamarin-rewards/static/css/main.575ddecc.chunk.css",
+    "main.js": "/juanjosebernalvillamarin-rewards/static/js/main.e13314d4.chunk.js",
+    "main.js.map": "/juanjosebernalvillamarin-rewards/static/js/main.e13314d4.chunk.js.map",
     "runtime-main.js": "/juanjosebernalvillamarin-rewards/static/js/runtime-main.1be35997.js",
     "runtime-main.js.map": "/juanjosebernalvillamarin-rewards/static/js/runtime-main.1be35997.js.map",
-    "static/js/2.6805eaec.chunk.js": "/juanjosebernalvillamarin-rewards/static/js/2.6805eaec.chunk.js",
-    "static/js/2.6805eaec.chunk.js.map": "/juanjosebernalvillamarin-rewards/static/js/2.6805eaec.chunk.js.map",
+    "static/js/2.adbdcef8.chunk.js": "/juanjosebernalvillamarin-rewards/static/js/2.adbdcef8.chunk.js",
+    "static/js/2.adbdcef8.chunk.js.map": "/juanjosebernalvillamarin-rewards/static/js/2.adbdcef8.chunk.js.map",
     "index.html": "/juanjosebernalvillamarin-rewards/index.html",
-    "precache-manifest.bd405c7160d8c9a5ad1bf6fc540eb4b7.js": "/juanjosebernalvillamarin-rewards/precache-manifest.bd405c7160d8c9a5ad1bf6fc540eb4b7.js",
+    "precache-manifest.351e337c0b3cf7eac2af9927fd6641b3.js": "/juanjosebernalvillamarin-rewards/precache-manifest.351e337c0b3cf7eac2af9927fd6641b3.js",
     "service-worker.js": "/juanjosebernalvillamarin-rewards/service-worker.js",
-    "static/css/main.2867a27a.chunk.css.map": "/juanjosebernalvillamarin-rewards/static/css/main.2867a27a.chunk.css.map",
-    "static/js/2.6805eaec.chunk.js.LICENSE.txt": "/juanjosebernalvillamarin-rewards/static/js/2.6805eaec.chunk.js.LICENSE.txt",
+    "static/css/main.575ddecc.chunk.css.map": "/juanjosebernalvillamarin-rewards/static/css/main.575ddecc.chunk.css.map",
+    "static/js/2.adbdcef8.chunk.js.LICENSE.txt": "/juanjosebernalvillamarin-rewards/static/js/2.adbdcef8.chunk.js.LICENSE.txt",
     "static/media/logo.png": "/juanjosebernalvillamarin-rewards/static/media/logo.cf518ba3.png"
   },
   "entrypoints": [
     "static/js/runtime-main.1be35997.js",
-    "static/js/2.6805eaec.chunk.js",
-    "static/css/main.2867a27a.chunk.css",
-    "static/js/main.c5ecabbd.chunk.js"
+    "static/js/2.adbdcef8.chunk.js",
+    "static/css/main.575ddecc.chunk.css",
+    "static/js/main.e13314d4.chunk.js"
   ]
 }
